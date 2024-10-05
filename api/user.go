@@ -3,7 +3,6 @@ package api
 import (
 	"log"
 	"net/http"
-	"time"
 
 	db "github.com/Irfan-Ayub/simple_bank/db/sqlc"
 	"github.com/Irfan-Ayub/simple_bank/util"
@@ -12,11 +11,10 @@ import (
 )
 
 type createUserResponse struct {
-	Username          string    `json:"username"`
-	FullName          string    `json:"full_name"`
-	Email             string    `json:"email"`
-	PasswordChangedAt time.Time `json:"password_changed_at"`
-	CreatedAt         time.Time `json:"created_at"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	FullName string `json:"full_name"`
+	Email    string `json:"email"`
 }
 type createUserRequest struct {
 	Username string `json:"username" binding:"required,alphanum"`
@@ -59,11 +57,10 @@ func (server *Server) createUser(ctx *gin.Context) {
 	}
 
 	rsp := createUserResponse{
-		Username:          user.Username,
-		FullName:          user.FullName,
-		Email:             user.Email,
-		PasswordChangedAt: user.PasswordChangedAt,
-		CreatedAt:         user.CreatedAt,
+		Username: user.Username,
+		Password: user.HashedPassword,
+		FullName: user.FullName,
+		Email:    user.Email,
 	}
 	ctx.JSON(http.StatusOK, rsp)
 }

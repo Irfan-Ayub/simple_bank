@@ -1,20 +1,20 @@
 package api
 
 import (
-	"log"
 	"net/http"
+	"time"
 
 	db "github.com/Irfan-Ayub/simple_bank/db/sqlc"
 	"github.com/Irfan-Ayub/simple_bank/util"
 	"github.com/gin-gonic/gin"
-	"github.com/lib/pq"
 )
 
 type createUserResponse struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	FullName string `json:"full_name"`
-	Email    string `json:"email"`
+	Username          string    `json:"username"`
+	FullName          string    `json:"full_name"`
+	Email             string    `json:"email"`
+	PasswordChangedAt time.Time `json:"password_changed_at"`
+	CreatedAt         time.Time `json:"created_at"`
 }
 type createUserRequest struct {
 	Username string `json:"username" binding:"required,alphanum"`
@@ -44,23 +44,20 @@ func (server *Server) createUser(ctx *gin.Context) {
 
 	user, err := server.store.CreateUser(ctx, arg)
 	if err != nil {
-		if pqErr, ok := err.(*pq.Error); ok {
-			log.Println(pqErr.Code.Name())
-			switch pqErr.Code.Name() {
-			case "unique_violation":
-				ctx.JSON(http.StatusForbidden, errorResponse(err))
-				return
-			}
+		if db.ErrorCode(err) == db.UniqueViolation {
+			ctx.JSON(http.StatusForbidden, errorResponse(err))
+			return
 		}
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
 	rsp := createUserResponse{
-		Username: user.Username,
-		Password: user.HashedPassword,
-		FullName: user.FullName,
-		Email:    user.Email,
+		Username:          user.Username,
+		FullName:          user.FullName,
+		Email:             user.Email,
+		PasswordChangedAt: user.PasswordChangedAt,
+		CreatedAt:         user.CreatedAt,
 	}
 	ctx.JSON(http.StatusOK, rsp)
 }

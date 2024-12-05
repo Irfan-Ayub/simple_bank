@@ -333,6 +333,7 @@ func TestListAccountsAPI(t *testing.T) {
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				args := db.ListAccountsParams{
+					Owner:  user.Username,
 					Limit:  int64(n),
 					Offset: 0,
 				}
@@ -375,6 +376,7 @@ func TestListAccountsAPI(t *testing.T) {
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				args := db.ListAccountsParams{
+					Owner:  user.Username,
 					Limit:  int64(n),
 					Offset: 0,
 				}
@@ -556,6 +558,8 @@ func TestUpdateAccountAPI(t *testing.T) {
 		request, err := http.NewRequest(http.MethodPut, url, bytes.NewReader(args))
 		require.NoError(t, err)
 
+		tc.setupAuth(t, request, server.tokenMaker)
+
 		server.router.ServeHTTP(recorder, request)
 		tc.checkResponse(t, recorder)
 	}
@@ -637,6 +641,8 @@ func TestDeleteAccountAPI(t *testing.T) {
 		url := fmt.Sprintf("/accounts/%d", tc.accountID)
 		request, err := http.NewRequest(http.MethodDelete, url, nil)
 		require.NoError(t, err)
+
+		tc.setupAuth(t, request, server.tokenMaker)
 
 		server.router.ServeHTTP(recorder, request)
 

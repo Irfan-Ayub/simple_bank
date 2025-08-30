@@ -1,0 +1,31 @@
+package gapi
+
+import (
+	"fmt"
+
+	db "github.com/Irfan-Ayub/simple_bank/db/sqlc"
+	"github.com/Irfan-Ayub/simple_bank/token"
+	"github.com/Irfan-Ayub/simple_bank/util"
+)
+
+// Server serves gRPC requests for our banking service
+type Server struct {
+	config     util.Config
+	store      db.Store
+	tokenMaker token.Maker
+}
+
+// New Server creates a new HTTP server and setup routing
+func NewServer(config util.Config, store db.Store) (*Server, error) {
+	tokenMaker, err := token.NewPasetoMaker(config.TokenSymmetricKey)
+	if err != nil {
+		return nil, fmt.Errorf("cannot create token maker: %w", err)
+	}
+	server := &Server{
+		config:     config,
+		store:      store,
+		tokenMaker: tokenMaker,
+	}
+
+	return server, nil
+}

@@ -4,18 +4,20 @@ import (
 	"fmt"
 
 	db "github.com/Irfan-Ayub/simple_bank/db/sqlc"
+	"github.com/Irfan-Ayub/simple_bank/pb"
 	"github.com/Irfan-Ayub/simple_bank/token"
 	"github.com/Irfan-Ayub/simple_bank/util"
 )
 
 // Server serves gRPC requests for our banking service
 type Server struct {
+	pb.UnimplementedSimpleBankServer
 	config     util.Config
 	store      db.Store
 	tokenMaker token.Maker
 }
 
-// New Server creates a new HTTP server and setup routing
+// New Server creates a new gRPC server
 func NewServer(config util.Config, store db.Store) (*Server, error) {
 	tokenMaker, err := token.NewPasetoMaker(config.TokenSymmetricKey)
 	if err != nil {

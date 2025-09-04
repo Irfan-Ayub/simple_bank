@@ -11,6 +11,7 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2
 	github.com/lib/pq v1.10.9
 	github.com/o1egl/paseto v1.0.0
+	github.com/rakyll/statik v0.1.7
 	github.com/spf13/viper v1.19.0
 	golang.org/x/crypto v0.39.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20250818200422-3122310a409c

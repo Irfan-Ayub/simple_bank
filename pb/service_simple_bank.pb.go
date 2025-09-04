@@ -26,12 +26,13 @@ var File_service_simple_bank_proto protoreflect.FileDescriptor
 
 const file_service_simple_bank_proto_rawDesc = "" +
 	"\n" +
-	"\x19service_simple_bank.proto\x12\x02pb\x1a\x15rpc_create_user.proto\x1a\x14rpc_login_user.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x1cgoogle/api/annotations.proto2\xba\x01\n" +
+	"\x19service_simple_bank.proto\x12\x02pb\x1a\x15rpc_create_user.proto\x1a\x14rpc_login_user.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x1cgoogle/api/annotations.proto2\xc7\x02\n" +
 	"\n" +
-	"SimpleBank\x12W\n" +
+	"SimpleBank\x12\x8c\x01\n" +
 	"\n" +
-	"CreateUser\x12\x15.pb.CreateUserRequest\x1a\x16.pb.CreateUserResponse\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/create_user\x12S\n" +
-	"\tLoginUser\x12\x14.pb.LoginUserRequest\x1a\x15.pb.LoginUserResponse\"\x19\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/v1/login_userB\x8a\x01\x92Aa\x12_\n" +
+	"CreateUser\x12\x15.pb.CreateUserRequest\x1a\x16.pb.CreateUserResponse\"O\x92A2\x12\x0fCreate new user\x1a\x1fUse this API to create new user\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/create_user\x12\xa9\x01\n" +
+	"\tLoginUser\x12\x14.pb.LoginUserRequest\x1a\x15.pb.LoginUserResponse\"o\x92AS\x12\n" +
+	"login user\x1aEUse this API to login user and get the access token and refresh token\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/v1/login_userB\x8a\x01\x92Aa\x12_\n" +
 	"\x0fSimple Bank API\"G\n" +
 	"\n" +
 	"Irfan Ayub\x12!github.com/Irfan-Ayub/simple_bank\x1a\x16irfanayub995@gmail.com2\x031.0Z$github.com/Irfan-Ayub/simple_bank/pbb\x06proto3"

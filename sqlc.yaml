@@ -13,6 +13,6 @@ sql:
       emit_interface: true
   database:
     managed: false
-    uri: "postgresql://postgres:postgres@localhost:5432/simple_bank"
+    uri: "postgresql://postgres:postgres@localhost:5432/simple_bank?sslmode=disable"
   rules:
     - sqlc/db-prepare
